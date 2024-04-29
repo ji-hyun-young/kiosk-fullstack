@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,4 +40,15 @@ public class Product extends BaseEntity {
     @Column(name="product_type")
     @Enumerated(EnumType.STRING)
     private ProductType type;
+
+    @Builder
+    public Product(Long productId, String name, String imageUrl, Long price, ProductOption option,
+        ProductType type) {
+        this.productId = productId;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.option = option;
+        this.type = type;
+    }
 }
