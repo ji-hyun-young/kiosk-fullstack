@@ -1,7 +1,7 @@
 package com.project.hanaro.kiosk.orders.domain;
 
-
 import com.project.hanaro.kiosk.products.domain.Product;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,11 +16,12 @@ import lombok.NoArgsConstructor;
 @Entity(name = "orders_products_mapping")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class OrderProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "order_product_id")
+    private Long orderProductId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -29,4 +30,10 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Column(name = "order_product_cnt")
+    private Integer orderProductCount;
+
+    @Column(name = "order_product_price")
+    private Long orderProductPrice;
 }
