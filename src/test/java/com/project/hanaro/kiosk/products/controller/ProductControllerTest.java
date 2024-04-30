@@ -38,22 +38,25 @@ class ProductControllerTest {
     @Test
     @DisplayName("Product 리스트 조회 테스트")
     void findProductList() throws Exception {
+        //BDD
+        //given
         ArrayList<ProductGetResponse> productList = new ArrayList<>();
 
-        productList.add(new ProductGetResponse(1L, "hamberger","url",1000L, ProductOption.SINGLE, ProductType.BURGER));
+        productList.add(new ProductGetResponse(1L, "plain burger","url",1000L, ProductOption.SINGLE, ProductType.BURGER));
         productList.add(new ProductGetResponse(2L, "pizza","url",2000L, ProductOption.SINGLE, ProductType.DESSERT));
         given(productService.findProducts()).willReturn(productList);
 
-
+        //when
         mockMvc.perform(MockMvcRequestBuilders.get("/products"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].productId").value(1L))
-            .andExpect(jsonPath("$[0].name").value("hamberger"))
+            .andExpect(jsonPath("$[0].name").value("plain burger"))
             .andExpect(jsonPath("$[1].productId").value(2L))
             .andExpect(jsonPath("$[1].name").value("pizza"))
             .andExpect(jsonPath("$.length()").value(2))
             .andDo(print());
 
+        //then
         verify(productService).findProducts();
     }
 
