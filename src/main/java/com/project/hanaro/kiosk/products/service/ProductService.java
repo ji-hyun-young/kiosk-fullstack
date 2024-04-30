@@ -5,7 +5,6 @@ import com.project.hanaro.kiosk.products.dto.ProductGetResponse;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertRequest;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import com.project.hanaro.kiosk.products.exception.ProductInvalidException;
-import com.project.hanaro.kiosk.products.exception.ProductNotFoundException;
 import com.project.hanaro.kiosk.products.repository.ProductRepository;
 import java.util.List;
 import java.util.Optional;
