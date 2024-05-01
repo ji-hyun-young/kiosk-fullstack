@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,14 +17,24 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public List<OrderGetResponse> findOrderList(){
-        List<OrderSummary> summaryList = orderRepository.getOrderWithSumPriceAndSumCnt();
-
+        List<OrderSummary> summaryList = orderRepository.getOrdersWithSumPriceAndSumCnt();
 
         return summaryList.stream().map(summary->{
             return new OrderGetResponse(summary.getOrderId(),summary.getCode(), summary.getTempId(),summary.getStatus(),
-                    summary.getCreatedAt(), summary.getSumPrice(),  summary.getSumCnt());
+                    summary.getCreatedAt(), summary.getSumPrice(), summary.getSumCnt());
         }).collect(Collectors.toList());
 
     }
+
+    public OrderGetResponse findOrder(Long id) {
+        return orderRepository.getOrder(id)
+                .map(order -> new OrderGetResponse(order.getOrderId(), order.getCode(), order.getTempId(), order.getStatus(),
+                        order.getCreatedAt(), order.getSumPrice(), order.getSumCnt()))
+                .orElse(null);
+    }
+
+
+
+
 
 }
