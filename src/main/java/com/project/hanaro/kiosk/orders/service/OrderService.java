@@ -1,6 +1,5 @@
 package com.project.hanaro.kiosk.orders.service;
 
-import com.project.hanaro.kiosk.orders.domain.Order;
 import com.project.hanaro.kiosk.orders.dto.OrderGetResponse;
 import com.project.hanaro.kiosk.orders.projection.OrderSummary;
 import com.project.hanaro.kiosk.orders.repository.OrderRepository;
@@ -8,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
