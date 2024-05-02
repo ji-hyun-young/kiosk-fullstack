@@ -1,6 +1,8 @@
 package com.project.hanaro.kiosk.orders.controller;
 
+import com.project.hanaro.kiosk.orders.dto.OrderDeleteResponse;
 import com.project.hanaro.kiosk.orders.dto.OrderGetResponse;
+import com.project.hanaro.kiosk.orders.dto.OrderInsertRequest;
 import com.project.hanaro.kiosk.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,18 @@ public class OrderController {
         OrderGetResponse response = orderService.findOrder(id);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/api/v1/orders")
+    public ResponseEntity<?> saveOrder(@RequestBody OrderInsertRequest request) {
+
+        return null;
+    }
+
+    @DeleteMapping("/api/v1/orders/{id}")
+    public ResponseEntity<OrderDeleteResponse> deleteOrder(@PathVariable Long id) {
+        OrderDeleteResponse response = orderService.deleteOrder(id);
+        return ResponseEntity.ok(response);
+    }
+
     
 }
