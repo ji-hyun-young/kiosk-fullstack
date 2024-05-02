@@ -2,6 +2,8 @@ create database kiosk;
 
 use kiosk;
 
+
+
 CREATE TABLE `members` (
    `member_id`   bigint   NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `login_id`   varchar(50)   NOT NULL,
