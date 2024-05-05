@@ -1,14 +1,13 @@
 package com.project.hanaro.kiosk.orders.controller;
 
-import com.project.hanaro.kiosk.orders.dto.OrderDeleteResponse;
-import com.project.hanaro.kiosk.orders.dto.OrderGetResponse;
-import com.project.hanaro.kiosk.orders.dto.OrderInsertRequest;
+import com.project.hanaro.kiosk.orders.dto.*;
 import com.project.hanaro.kiosk.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +28,12 @@ public class OrderController {
     }
 
     @PostMapping("/api/v1/orders")
-    public ResponseEntity<?> saveOrder(@RequestBody OrderInsertRequest request) {
+    public ResponseEntity<OrderSaveResponse> saveOrder(@RequestBody OrderSaveRequest request) {
+        OrderInsertRequest orderInsertRequest = request.orderInsertRequest();
+        List<OrderProductInsertRequest> orderProductInsertRequests =request.orderProductInsertRequests();
+        OrderSaveResponse response = orderService.saveOrder(orderInsertRequest, orderProductInsertRequests);
 
-        return null;
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/api/v1/orders/{id}")
@@ -40,5 +42,5 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    
+
 }
