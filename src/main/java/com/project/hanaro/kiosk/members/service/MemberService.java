@@ -1,10 +1,7 @@
 package com.project.hanaro.kiosk.members.service;
 
 import com.project.hanaro.kiosk.members.domain.Member;
-import com.project.hanaro.kiosk.members.dto.MemberJoinRequest;
-import com.project.hanaro.kiosk.members.dto.MemberJoinResponse;
-import com.project.hanaro.kiosk.members.dto.MemberLoginRequest;
-import com.project.hanaro.kiosk.members.dto.MemberLoginResponse;
+import com.project.hanaro.kiosk.members.dto.*;
 import com.project.hanaro.kiosk.members.exception.MemberDuplException;
 import com.project.hanaro.kiosk.members.exception.MemberInvalidException;
 import com.project.hanaro.kiosk.members.repository.MemberRepository;
@@ -35,4 +32,10 @@ public class MemberService {
 
         return new MemberLoginResponse(member.getMemberId());
     }
+
+    public MemberGuestLoginResponse memberGuestLogin(MemberGuestLoginRequest request) {
+
+        return new MemberGuestLoginResponse(-1L);
+    }
+
 }
