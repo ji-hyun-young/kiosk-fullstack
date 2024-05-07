@@ -3,6 +3,8 @@ package com.project.hanaro.kiosk.products.service;
 import com.project.hanaro.kiosk.members.dto.MemberLoginResponse;
 import com.project.hanaro.kiosk.products.domain.Product;
 import com.project.hanaro.kiosk.products.dto.ProductGetResponse;
+import com.project.hanaro.kiosk.products.dto.ProductImageUpsertRequest;
+import com.project.hanaro.kiosk.products.dto.ProductImageUpsertResponse;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertRequest;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import com.project.hanaro.kiosk.products.exception.ProductInvalidException;
@@ -59,10 +61,18 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductUpsertResponse updateProduct(Long productId, ProductUpsertRequest productUpsertRequest) {
+    public ProductUpsertResponse updateProduct(Long productId, ProductUpsertRequest request) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new ProductNotFoundException(productId));
-        Product savedProduct = productUpsertRequest.updateEntity(product);
+        Product savedProduct = request.updateEntity(product);
         return ProductUpsertResponse.fromEntity(savedProduct);
+    }
+
+    @Transactional
+    public ProductImageUpsertResponse updateProductImage(Long productId, ProductImageUpsertRequest request) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ProductNotFoundException(productId));
+        Product savedProduct = request.updateEntity(product);
+        return ProductImageUpsertResponse.fromEntity(savedProduct);
     }
 }

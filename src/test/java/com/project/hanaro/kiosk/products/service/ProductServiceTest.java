@@ -42,11 +42,9 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 저장")
     void saveProduct() {
-        ProductUpsertRequest request = new ProductUpsertRequest(JsonNullable.of("plain burger"), JsonNullable.of("url"),
-            JsonNullable.of(1000L), JsonNullable.of(ProductOption.SINGLE), JsonNullable.of(ProductType.BURGER));
+        ProductUpsertRequest request = new ProductUpsertRequest(JsonNullable.of("plain burger"), JsonNullable.of(1000L), JsonNullable.of(ProductOption.SINGLE), JsonNullable.of(ProductType.BURGER));
 
         when(productRepository.save(Mockito.any(Product.class))).thenReturn(product);
-
         ProductUpsertResponse savedProduct = productService.saveProduct(request);
 
         Assertions.assertThat(savedProduct).isNotNull();

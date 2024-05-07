@@ -1,6 +1,8 @@
 package com.project.hanaro.kiosk.products.controller;
 
 import com.project.hanaro.kiosk.products.dto.ProductGetResponse;
+import com.project.hanaro.kiosk.products.dto.ProductImageUpsertRequest;
+import com.project.hanaro.kiosk.products.dto.ProductImageUpsertResponse;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertRequest;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import com.project.hanaro.kiosk.products.service.ProductService;
@@ -77,4 +79,11 @@ public class ProductController {
         ProductUpsertResponse response = productService.updateProduct(productId, productUpsertRequest);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/api/v1/products/image/{productId}")
+    public ResponseEntity<ProductImageUpsertResponse> updateProductImage(@PathVariable Long productId, @RequestBody ProductImageUpsertRequest productImageUpsertRequest){
+        ProductImageUpsertResponse response = productService.updateProductImage(productId, productImageUpsertRequest);
+        return ResponseEntity.ok(response);
+    }
+
 }

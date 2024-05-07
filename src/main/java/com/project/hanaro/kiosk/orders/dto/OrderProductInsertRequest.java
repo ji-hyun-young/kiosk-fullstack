@@ -16,6 +16,6 @@ public class OrderProductInsertRequest {
     private Integer orderProductCount;
     private Long orderProductPrice;
     public static OrderProduct toEntity(OrderProductInsertRequest request) {
-        return OrderProduct.builder().order(request.order).product(request.product).orderProductCount(request.orderProductCount).orderProductCount(request.orderProductCount).build();
+        return OrderProduct.builder().order(request.order).product(request.product).orderProductCount(request.orderProductCount).orderProductPrice(request.orderProductPrice).build();
     }
 }
