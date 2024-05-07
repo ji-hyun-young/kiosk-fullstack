@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: "primary" | "danger" | "default" | "success";
+  variant: "primary" | "danger" | "default" | "success" | "green";
 }
 
 export const Button = ({

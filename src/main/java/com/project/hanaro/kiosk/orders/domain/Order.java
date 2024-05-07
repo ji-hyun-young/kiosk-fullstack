@@ -14,8 +14,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Entity(name = "orders")
 @Getter
@@ -31,7 +34,7 @@ public class Order extends BaseEntity {
     private Member member;
 
     @Column(name = "code")
-    private String code;
+    private UUID code;
 
     @Column(name = "temp_id")
     private Long tempId;
@@ -40,4 +43,11 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Builder
+    public Order(Member member, UUID code, Long tempId, OrderStatus status) {
+        this.member = member;
+        this.code = code;
+        this.tempId = tempId;
+        this.status = status;
+    }
 }
