@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +32,9 @@ public class ProductService {
         return new PageImpl<>(productList, pageable, products.getTotalElements());
     }
 
+    @Transactional
     public ProductUpsertResponse saveProduct(ProductUpsertRequest request) {
-        Optional<Product> product = productRepository.findByName(request.name());
+        Optional<Product> product = productRepository.findByName(request.name().get());
 
         if(product.isPresent()){
             throw new ProductInvalidException();
@@ -53,5 +55,13 @@ public class ProductService {
             .map(ProductGetResponse::fromEntity).collect(Collectors.toList());
 
         return new PageImpl<>(productList, pageable, products.getTotalElements());
+    }
+
+    @Transactional
+    public ProductUpsertResponse updateProduct(Long productId, ProductUpsertRequest productUpsertRequest) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ProductNotFoundException(productId));
+        Product savedProduct = productUpsertRequest.updateEntity(product);
+        return ProductUpsertResponse.fromEntity(savedProduct);
     }
 }

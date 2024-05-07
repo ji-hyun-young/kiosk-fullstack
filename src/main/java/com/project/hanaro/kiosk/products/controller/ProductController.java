@@ -66,4 +66,15 @@ public class ProductController {
         ProductGetResponse response = productService.findProduct(productId);
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * 상품 수정
+     * @param productUpsertRequest
+     * @return
+     */
+    @PatchMapping("/api/v1/products/{productId}")
+    public ResponseEntity<ProductUpsertResponse> updateProduct(@PathVariable Long productId, @RequestBody ProductUpsertRequest productUpsertRequest) {
+        ProductUpsertResponse response = productService.updateProduct(productId, productUpsertRequest);
+        return ResponseEntity.ok(response);
+    }
 }
