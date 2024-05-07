@@ -5,6 +5,7 @@ import com.project.hanaro.kiosk.common.domain.BaseEntity;
 import com.project.hanaro.kiosk.members.vo.MemberRole;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long memberId;
 
     @Column(name = "login_id")
@@ -32,4 +32,14 @@ public class Member extends BaseEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private MemberRole role;
+
+    @Builder
+    public Member(Long memberId, String loginId, String password, String nickname, Integer point, MemberRole role) {
+        this.memberId = memberId;
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.point = point;
+        this.role = role;
+    }
 }
