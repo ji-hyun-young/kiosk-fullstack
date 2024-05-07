@@ -4,6 +4,6 @@ import com.project.hanaro.kiosk.common.exception.ValueInvalidException;
 
 public class MemberInvalidException extends ValueInvalidException {
     public MemberInvalidException() {
-       super("Duplicated Member Value");
+       super("Invalid Member Value");
     }
 }
