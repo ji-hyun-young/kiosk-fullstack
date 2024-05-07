@@ -3,6 +3,7 @@ package com.project.hanaro.kiosk.orders.service;
 import com.project.hanaro.kiosk.orders.domain.Order;
 import com.project.hanaro.kiosk.orders.domain.OrderProduct;
 import com.project.hanaro.kiosk.orders.dto.*;
+import com.project.hanaro.kiosk.orders.exception.OrderNotFoundException;
 import com.project.hanaro.kiosk.orders.projection.OrderSummary;
 import com.project.hanaro.kiosk.orders.repository.OrderProductRepository;
 import com.project.hanaro.kiosk.orders.repository.OrderRepository;
@@ -35,18 +36,19 @@ public class OrderService {
         return orderRepository.getOrder(id)
                 .map(order -> new OrderGetResponse(order.getOrderId(), order.getCode(), order.getTempId(), order.getStatus(),
                         order.getCreatedAt(), order.getSumPrice(), order.getSumCnt()))
-                .orElse(null);
+                .orElseThrow(OrderNotFoundException::new);
     }
 
 
     public OrderDeleteResponse deleteOrder(Long id) {
-        Optional<Order> optional = orderRepository.findById(id);
-        if (optional.isPresent()) {
-            orderRepository.deleteById(optional.get().getOrderId());
-            return new OrderDeleteResponse("order deleted");
-        } else {
-            return new OrderDeleteResponse("order not found");
-        }
+//        List<Optional<OrderProduct>> orderProducts = orderProductRepository.findAllByOrderId(id);
+//        for (Optional<OrderProduct> optional : orderProducts) {
+//            optional.ifPresentOrElse((orderProduct -> orderProductRepository.delete(orderProduct)));
+//        }
+
+        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        orderRepository.deleteById(order.getOrderId());
+        return new OrderDeleteResponse("order deleted");
     }
 
     @Transactional
