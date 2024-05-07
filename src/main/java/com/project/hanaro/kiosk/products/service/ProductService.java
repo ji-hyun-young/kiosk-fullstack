@@ -1,5 +1,6 @@
 package com.project.hanaro.kiosk.products.service;
 
+import com.project.hanaro.kiosk.members.dto.MemberLoginResponse;
 import com.project.hanaro.kiosk.products.domain.Product;
 import com.project.hanaro.kiosk.products.dto.ProductGetResponse;
 import com.project.hanaro.kiosk.products.dto.ProductUpsertRequest;
