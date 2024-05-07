@@ -1,10 +1,6 @@
 package com.project.hanaro.kiosk.members.controller;
 
-import com.project.hanaro.kiosk.members.dto.MemberJoinRequest;
-import com.project.hanaro.kiosk.members.dto.MemberJoinResponse;
-import com.project.hanaro.kiosk.members.dto.MemberLoginRequest;
-import com.project.hanaro.kiosk.members.dto.MemberLoginResponse;
-import com.project.hanaro.kiosk.members.repository.MemberRepository;
+import com.project.hanaro.kiosk.members.dto.*;
 import com.project.hanaro.kiosk.members.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +23,14 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<MemberLoginResponse> memberLogin(@RequestBody MemberLoginRequest request, HttpSession session) {
         MemberLoginResponse response = memberService.memberLogin(request);
-        session.setAttribute("memberId", response.memberId()); // 세션에 memberId 저장
+        session.setAttribute("memberId", response.memberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/guest")
+    public ResponseEntity<MemberGuestLoginResponse> memberGuestLogin(@RequestBody MemberGuestLoginRequest request, HttpSession session) {
+        MemberGuestLoginResponse response = memberService.memberGuestLogin(request);
+        session.setAttribute("memberId", response.memberId());
         return ResponseEntity.ok(response);
     }
 
@@ -36,5 +39,4 @@ public class MemberController {
         session.invalidate(); // 세션 무효화
         return ResponseEntity.ok().build();
     }
-
 }
