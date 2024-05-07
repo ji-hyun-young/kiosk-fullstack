@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 const Login = () => {
   // 상태 관리를 위한 useState 훅 사용
-  const [memberId, setMemberId] = useState("");
+  const [loginId, setloginId] = useState("");
   const [password, setPassword] = useState("");
 
   // 로그인 함수
   const handleLogin = async () => {
     // 요청 바디
     const requestBody = {
-      memberId: memberId,
+      loginId: loginId,
       password: password,
     };
 
@@ -51,9 +51,11 @@ const Login = () => {
           </label>
           <input
             type="text"
-            id="memberId"
+            id="loginId"
             className="flex-1 ml-4 p-2 text-gray-700"
             placeholder="아이디 입력"
+            value={loginId}
+            onChange={(e) => setloginId(e.target.value)}
           />
         </div>
         <div className="flex items-center mb-2">
@@ -65,6 +67,8 @@ const Login = () => {
             id="password"
             className="flex-1 p-2 text-gray-700"
             placeholder="비밀번호 입력"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <button className="w-36 mt-7 mr-7 btn-login">취소</button>
