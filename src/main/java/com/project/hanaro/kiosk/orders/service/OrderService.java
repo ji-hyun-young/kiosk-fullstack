@@ -8,6 +8,7 @@ import com.project.hanaro.kiosk.orders.repository.OrderProductRepository;
 import com.project.hanaro.kiosk.orders.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class OrderService {
         }
     }
 
+    @Transactional
     public OrderSaveResponse saveOrder(OrderInsertRequest orderInsertRequest, List<OrderProductInsertRequest> orderProductInsertRequests) {
         Order savedOrder = orderRepository.save(OrderInsertRequest.toEntity(orderInsertRequest));
 
