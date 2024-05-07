@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -41,8 +42,8 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 저장")
     void saveProduct() {
-        ProductUpsertRequest request = new ProductUpsertRequest("plain burger", "url",
-            1000L, ProductOption.SINGLE, ProductType.BURGER);
+        ProductUpsertRequest request = new ProductUpsertRequest(JsonNullable.of("plain burger"), JsonNullable.of("url"),
+            JsonNullable.of(1000L), JsonNullable.of(ProductOption.SINGLE), JsonNullable.of(ProductType.BURGER));
 
         when(productRepository.save(Mockito.any(Product.class))).thenReturn(product);
 
