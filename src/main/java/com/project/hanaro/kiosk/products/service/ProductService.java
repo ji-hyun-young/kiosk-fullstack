@@ -28,7 +28,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public Page<ProductGetResponse> findProducts(ProductOption productOption, Pageable pageable){
-        Page<Product> products = productRepository.getPageByProductOption(productOption, pageable);
+        Page<Product> products = productRepository.getPageByProductOption(productOption.getOption(), pageable);
         List<ProductGetResponse> productList = products.stream()
             .map(ProductGetResponse::fromEntity).collect(Collectors.toList());
 
