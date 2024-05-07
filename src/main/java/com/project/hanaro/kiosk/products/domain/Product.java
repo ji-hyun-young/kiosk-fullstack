@@ -51,4 +51,24 @@ public class Product extends BaseEntity {
         this.option = option;
         this.type = type;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public void setOption(ProductOption option) {
+        this.option = option;
+    }
+
+    public void setType(ProductType type) {
+        this.type = type;
+    }
 }
