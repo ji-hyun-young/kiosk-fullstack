@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public record OrderInsertRequest(Member member, OrderStatus status) {
     public static Order toEntity(OrderInsertRequest request){
-        return Order.builder().member(request.member).code(UUID.randomUUID()).tempId(1L).status(request.status).build();
+        return Order.builder().member(request.member).code("aaa").tempId(1L).status(request.status).build();
     }
 
 }
