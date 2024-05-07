@@ -1,24 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "../globalTypes";
+import { useOrder } from "../contexts/order-context";
 
 type Props = {
   product: Product;
 };
 
 const Order = ({ product }: Props) => {
+  const { updateTotalCnt } = useOrder();
   const [count, setCount] = useState(1);
+
+  // useEffect(() => {
+  //   updateTotalCnt(count);
+  // }, [count, updateTotalCnt, totalCnt]);
+
+  const plusCount = () => {
+    setCount((prev) => {
+      const newCnt = prev + 1;
+      updateTotalCnt(newCnt);
+      return newCnt;
+    });
+  };
+
+  const minusCount = () => {
+    setCount((prev) => prev - 1);
+  };
+
   const handleCount = (e: React.MouseEvent<HTMLButtonElement>) => {
     const name = e.currentTarget.name;
 
     if (name === "plusBtn") {
-      setCount(count + 1);
+      plusCount();
     }
 
     if (name === "minusBtn") {
       if (count === 1) {
         return;
       }
-      setCount(count - 1);
+      minusCount();
     }
   };
   return (
