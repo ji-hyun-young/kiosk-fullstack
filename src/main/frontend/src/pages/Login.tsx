@@ -71,7 +71,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button className="w-36 mt-7 mr-7 btn-login">취소</button>
+        <button className="w-36 mt-7 mr-7 btn-cancel">취소</button>
         <button className="w-36 mt-7 btn-login" onClick={handleLogin}>
           로그인
         </button>
@@ -80,7 +80,7 @@ const Login = () => {
           <p className="text-sm mt-28 text-white">
             *회원가입하시면 포인트 적립을 받을 수 있습니다.
           </p>
-          <button className="w-36 mt-3 btn-login">회원가입</button>
+          <button className="w-36 mt-3 btn-join">회원가입</button>
         </div>
       </div>
     </div>
