@@ -4,7 +4,7 @@ import com.project.hanaro.kiosk.products.domain.Product;
 import com.project.hanaro.kiosk.products.vo.ProductOption;
 import com.project.hanaro.kiosk.products.vo.ProductType;
 
-public record ProductGetResponse(Long productId, String name, String imageUrl, Long price, ProductOption option, ProductType productType) {
+public record ProductGetResponse(Long productId, String name, String imageUrl, Long price, ProductOption option, ProductType type) {
 
     public static ProductGetResponse fromEntity(Product product){
         return new ProductGetResponse(product.getProductId(), product.getName(), product.getImageUrl(),
