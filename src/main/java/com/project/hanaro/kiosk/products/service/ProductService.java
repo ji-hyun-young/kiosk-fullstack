@@ -7,10 +7,14 @@ import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import com.project.hanaro.kiosk.products.exception.ProductInvalidException;
 import com.project.hanaro.kiosk.products.exception.ProductNotFoundException;
 import com.project.hanaro.kiosk.products.repository.ProductRepository;
+import com.project.hanaro.kiosk.products.vo.ProductOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,10 +23,12 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public List<ProductGetResponse> findProducts(){
-        List<Product> products = productRepository.findAll();
-        return products.stream()
+    public Page<ProductGetResponse> findProducts(ProductOption productOption, Pageable pageable){
+        Page<Product> products = productRepository.getPageByProductOption(productOption, pageable);
+        List<ProductGetResponse> productList = products.stream()
             .map(ProductGetResponse::fromEntity).collect(Collectors.toList());
+
+        return new PageImpl<>(productList, pageable, products.getTotalElements());
     }
 
     public ProductUpsertResponse saveProduct(ProductUpsertRequest request) {
@@ -39,5 +45,13 @@ public class ProductService {
     public ProductGetResponse findProduct(Long productId) {
         Product product = productRepository.findById(productId).orElseThrow(()-> new ProductNotFoundException(productId));
         return ProductGetResponse.fromEntity(product);
+    }
+
+    public Page<ProductGetResponse> findSuggestProducts(Pageable pageable) {
+        Page<Product> products = productRepository.getSuggestProductsPage(pageable);
+        List<ProductGetResponse> productList = products.stream()
+            .map(ProductGetResponse::fromEntity).collect(Collectors.toList());
+
+        return new PageImpl<>(productList, pageable, products.getTotalElements());
     }
 }
