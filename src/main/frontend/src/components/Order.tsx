@@ -7,23 +7,17 @@ type Props = {
 };
 
 const Order = ({ product }: Props) => {
-  const { updateTotalCnt } = useOrder();
+  const { saveItem, removeItem } = useOrder();
   const [count, setCount] = useState(1);
 
-  // useEffect(() => {
-  //   updateTotalCnt(count);
-  // }, [count, updateTotalCnt, totalCnt]);
-
   const plusCount = () => {
-    setCount((prev) => {
-      const newCnt = prev + 1;
-      updateTotalCnt(newCnt);
-      return newCnt;
-    });
+    setCount((prev) => prev + 1);
+    saveItem(product);
   };
 
   const minusCount = () => {
     setCount((prev) => prev - 1);
+    removeItem(product.id);
   };
 
   const handleCount = (e: React.MouseEvent<HTMLButtonElement>) => {
