@@ -4,10 +4,7 @@ import com.project.hanaro.kiosk.common.domain.BaseEntity;
 import com.project.hanaro.kiosk.members.domain.Member;
 import com.project.hanaro.kiosk.orders.vo.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.UUID;
 
 @Entity(name = "orders")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
@@ -33,14 +31,14 @@ public class Order extends BaseEntity {
     private String code;
 
     @Column(name = "temp_id")
-    private Long tempId;
+    private Integer tempId;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Builder
-    public Order(Member member, String code, Long tempId, OrderStatus status) {
+    public Order(Member member, String code, Integer tempId, OrderStatus status) {
         this.member = member;
         this.code = code;
         this.tempId = tempId;
