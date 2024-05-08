@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/default.html}" xmlns:layout="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>상품 상세 관리</title>
+  </head>
+  <body>
+    <div layout:fragment="content" id="adminMain">
+      <!-- 메인 영역 -->
+      <!-- 왼쪽 사이드메뉴 -->
+      <div id="adminSide">
+        <ul>
+          <li><a href="/admin/member">회원 관리</a></li>
+          <li><a href="/admin/product">상품 관리</a></li>
+          <li><a href="/admin/order">주문 관리</a></li>
+        </ul>
+      </div>
+
+      <!-- 오른쪽 컨텐츠 영역 -->
+      <div id="adminContent">
+        <div id="adminSection">
+          <div class="adminDiv">
+            <h3>상품 관리</h3>
+          </div>
+          <!-- 상품 정보 표시 -->
+          <div class="adminTableWrapper">
+            <table class="adminTable">
+              <tr>
+                <td>이름</td>
+                <td><input id="name" th:value="*{product.name}" /></td>
+              </tr>
+              <tr>
+                <td>이미지</td>
+                <td><img th:src="*{product.imageUrl}" alt="상품 이미지" /></td>
+              </tr>
+              <tr>
+                <td>가격</td>
+                <td><input id="price" th:value="*{product.price}" /></td>
+              </tr>
+              <tr>
+                <td>옵션</td>
+                <td th:text="*{product.option}"></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- 추가적인 상품 정보를 표시할 수 있음 -->
+
+          <!-- 수정하기, 취소 버튼 -->
+          <div>
+            <button type="button" onclick="editProduct()">수정하기</button>
+            <button type="button" onclick="cancel()">취소</button>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" id="productId" th:value="${product.productId}" />
+
+      <script>
+        async function editProduct() {
+          const productId = document.getElementById("productId").value;
+          const name = document.getElementById("name").value;
+          const price = document.getElementById("price").value;
+
+          const updatedProduct = {
+            name: name,
+            price: parseFloat(price.replace(/[^\d.-]/g, "")), // 가격에서 문자 제거 후 숫자로 변환
+          };
+
+          const url = "/api/v1/products/" + productId;
+
+          try {
+            const res = await fetch(url, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(updatedProduct), // 수정된 상품 정보를 JSON 형식으로 전송
+            });
+
+            if (!res.ok) {
+              throw new Error("API 요청 실패");
+            }
+
+            const data = await res.json();
+            alert("수정되었습니다.");
+            location.href = "/admin/product";
+          } catch (error) {
+            console.error("API 요청 실패:", error.message);
+          }
+        }
+
+        function cancel() {
+          location.href = "/admin/product";
+        }
+      </script>
+    </div>
+  </body>
+</html>
