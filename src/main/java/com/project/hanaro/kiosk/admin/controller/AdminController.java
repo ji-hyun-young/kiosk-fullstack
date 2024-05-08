@@ -20,4 +20,14 @@ public class AdminController {
     public String adminMemberPage(){
         return "/admin/member_management";
     }
+
+    @GetMapping("/admin/product")
+    public String adminProductPage(){
+        return "/admin/product_management";
+    }
+
+    @GetMapping("/admin/order")
+    public String adminOrderPage(){
+        return "/admin/order_management";
+    }
 }

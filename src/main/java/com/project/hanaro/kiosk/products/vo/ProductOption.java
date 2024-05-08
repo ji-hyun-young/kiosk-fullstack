@@ -2,7 +2,7 @@ package com.project.hanaro.kiosk.products.vo;
 
 public enum ProductOption {
 
-    SINGLE("SINGLE"), SET("SET");
+    SINGLE("SINGLE"), SET("SET"), ALL("ALL");
 
     private final String option;
 

@@ -1,27 +1,49 @@
 import { useState } from "react";
 import { Product } from "../globalTypes";
+import { useOrder } from "../contexts/order-context";
 
 type Props = {
   product: Product;
 };
 
 const Order = ({ product }: Props) => {
+  const { updateTotalCnt } = useOrder();
   const [count, setCount] = useState(1);
+
+  // useEffect(() => {
+  //   updateTotalCnt(count);
+  // }, [count, updateTotalCnt, totalCnt]);
+
+  const plusCount = () => {
+    setCount((prev) => {
+      const newCnt = prev + 1;
+      updateTotalCnt(newCnt);
+      return newCnt;
+    });
+  };
+
+  const minusCount = () => {
+    setCount((prev) => prev - 1);
+  };
+
   const handleCount = (e: React.MouseEvent<HTMLButtonElement>) => {
     const name = e.currentTarget.name;
 
     if (name === "plusBtn") {
-      setCount(count + 1);
+      plusCount();
     }
 
     if (name === "minusBtn") {
-      setCount(count - 1);
+      if (count === 1) {
+        return;
+      }
+      minusCount();
     }
   };
   return (
     <div className="h-10 flex justify-center items-center border-b-2 border-gray-200 mx-4 my-2">
       <span className="mx-1">{product.name}</span> -{" "}
-      <span className="mx-1">{product.price}</span>
+      <span className="mx-1">{product.price}원</span>
       <button
         className="border size-5 bg-gray-50 rounded text-center flex justify-center items-center mx-1"
         name="minusBtn"

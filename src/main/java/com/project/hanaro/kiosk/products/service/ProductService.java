@@ -28,7 +28,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public Page<ProductGetResponse> findProducts(ProductOption productOption, Pageable pageable){
-        Page<Product> products = productRepository.getPageByProductOption(productOption, pageable);
+        Page<Product> products = productRepository.getPageByProductOption(productOption.getOption(), pageable);
         List<ProductGetResponse> productList = products.stream()
             .map(ProductGetResponse::fromEntity).collect(Collectors.toList());
 
@@ -74,5 +74,13 @@ public class ProductService {
             .orElseThrow(() -> new ProductNotFoundException(productId));
         Product savedProduct = request.updateEntity(product);
         return ProductImageUpsertResponse.fromEntity(savedProduct);
+    }
+
+    @Transactional
+    public ProductUpsertResponse deleteProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ProductNotFoundException(productId));
+        product.setDeleteYn(true);
+        return ProductUpsertResponse.fromEntity(product);
     }
 }
