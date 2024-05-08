@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Product } from "../globalTypes";
+import { Item } from "../globalTypes";
 import { useOrder } from "../contexts/order-context";
 
 type Props = {
-  product: Product;
+  product: Item;
 };
 
 const Order = ({ product }: Props) => {
