@@ -1,0 +1,161 @@
+/* common.css */
+
+
+
+/* Resetting default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Login form container */
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+/* Login form styles */
+.loginForm {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.loginSection1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.loginHeaderText {
+  margin-bottom: 10px;
+}
+
+.loginMain form {
+  margin-top: 10px;
+}
+
+.loginText {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.loginText:hover {
+  background-color: #0056b3;
+}
+
+.pageTitle {
+      text-align: center;
+      margin-top: 50px;
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* 메인 영역 스타일링 */
+    #adminMain {
+      display: flex;
+      height: 100%;
+      border: 2px solid #ccc; /* 전체 영역 테두리 스타일링 */
+    }
+
+    /* 왼쪽 사이드메뉴 스타일링 */
+    #adminSide {
+      width: 200px;
+      background-color: #f0f0f0;
+      border-right: 2px solid #ccc; /* 왼쪽 영역 테두리 스타일링 */
+      padding: 20px;
+      box-sizing: border-box; /* padding 포함한 크기로 지정 */
+    }
+
+    #adminSide ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #adminSide li {
+      margin-bottom: 10px;
+    }
+
+    #adminSide a {
+      text-decoration: none;
+      color: #333;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #ddd;
+    }
+
+    #adminSide a:hover {
+      background-color: #bbb;
+    }
+
+    /* 오른쪽 컨텐츠 영역 스타일링 */
+    #adminContent {
+      flex: 1;
+      padding: 20px;
+      border-left: 2px solid #ccc; /* 오른쪽 영역 테두리 스타일링 */
+      box-sizing: border-box; /* padding 포함한 크기로 지정 */
+ }
+
+ .adminDiv {
+ 	margin: 20px 0px;
+  display: flex;
+  flex-direction: row; /* 요소들을 가로로 배치 */
+  align-items: center; /* 세로 정렬 중앙으로 */
+
+ }
+ .adminDiv2 {
+ 	margin: 10px 0px;
+ }
+
+ #tableTitle {
+ 	display: flex;
+ 	flex-flow: row nowrap;
+ 	justify-content: space-between;
+ }
+ .adminTableWrapper {
+   width: 100%;
+   display: flex;
+   flex-direction: column; /* 수직 방향으로 요소 배치 */
+ }
+
+ .adminTable {
+   flex: 1; /* 자식 요소가 공간을 적절히 차지하도록 함 */
+   border: 1px solid #111;
+   text-align: center;
+ }
+ .adminTable th {
+ 	border: 1px solid #111;
+ 	background-color: #aaa;
+ }
+ .adminTable td {
+ 	border: 1px solid #111;
+ }
+ .pageNav {
+ 	display: flex;
+ 	flex-flow: row nowrap;
+ 	justify-content: space-between;
+ }
+ .pageNav a {
+ 	color: #333;
+ 	margin: 0 5px;
+ }
+ #sendEmail {
+ 	padding: 0;
+ 	border: none;
+ 	background: none;
+ }

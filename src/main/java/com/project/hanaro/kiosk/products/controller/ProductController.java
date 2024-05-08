@@ -80,6 +80,12 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 상품 이미지 수정
+     * @param productId 
+     * @param productImageUpsertRequest
+     * @return
+     */
     @PatchMapping("/api/v1/products/image/{productId}")
     public ResponseEntity<ProductImageUpsertResponse> updateProductImage(@PathVariable Long productId, @RequestBody ProductImageUpsertRequest productImageUpsertRequest){
         ProductImageUpsertResponse response = productService.updateProductImage(productId, productImageUpsertRequest);

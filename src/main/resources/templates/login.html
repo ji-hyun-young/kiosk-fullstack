@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/default.html}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="">
+  <head>
+    <title>로그인</title>
+  </head>
+  <body>
+    <!-- th:replace에서 가져올 내용 -->
+    <th:block th:fragment="fragment-main">
+      <!-- 로그인 -->
+      <div class="loginForm container text-center">
+        <div class="loginSection1">
+          <div class="loginHeaderText"><h3>관리자 로그인</h3></div>
+          <div class="loginHeaderText"><p>The design and maintenance are excellent.</p></div>
+        </div>
+        <div class="loginMain">
+          <form id="loginForm">
+            <table class="main1">
+              <tr>
+                <td>아이디</td>
+                <td>
+                  <input type="text" name="loginId" />
+                </td>
+              </tr>
+              <tr>
+                <td>비밀번호</td>
+                <td>
+                  <input type="password" name="password" />
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center">
+                  <input type="submit" class="loginText" name="submit" value="로그인" />
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+
+      <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+          event.preventDefault(); // 기본 동작 중단
+
+          // form 데이터 가져오기
+          const formData = new FormData(this);
+          const jsonData = {};
+          formData.forEach((value, key) => {
+            jsonData[key] = value;
+          });
+
+          // JSON 데이터를 서버로 전송
+          fetch("/api/v1/members/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert("로그인 성공");
+              location.href = "/admin/member";
+            })
+            .catch((error) => {
+              console.error("There has been a problem with your fetch operation:", error);
+            });
+        });
+      </script>
+    </th:block>
+  </body>
+</html>

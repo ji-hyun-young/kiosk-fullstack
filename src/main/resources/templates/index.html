@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/default.html}"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
-<head>
-  <title>JHY-Kiosk</title>
-</head>
-<body>
-
-<div layout:fragment="content">
-  <!-- 메인 -->
-  <div th:replace="/main.html :: fragment-main"></div>
-</div>
-</body>
+<html
+  lang="en"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{layouts/default.html}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+>
+  <head>
+    <title>JHY-Kiosk</title>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <!-- 메인 -->
+      <div th:replace="/login.html :: fragment-main"></div>
+    </div>
+  </body>
 </html>

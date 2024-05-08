@@ -1,5 +1,6 @@
 import { Button } from "../components/Button";
 import Order from "../components/Order";
+import { useOrder } from "../contexts/order-context";
 
 const Cart = () => {
   const product = {
@@ -7,8 +8,12 @@ const Cart = () => {
     name: "불고기 버거",
     price: 5000,
   };
+  // const totalCnt = 2;
+  // const totalPrice = 10000;
+  const { totalCnt, totalPrice } = useOrder();
+
   return (
-    <div className="w-128 h-128 bg-green-900">
+    <div className="h-[100vh] bg-green-900">
       <div className="h-1/5 flex justify-center items-center">
         <span className="text-white text-lg font-bold tracking-wide">
           주문을 확인하세요.
@@ -21,6 +26,12 @@ const Cart = () => {
           <Order product={product} />
 
           {/* 총 수량, 총 금액 */}
+          <div className="h-10 flex justify-end items-end border-b-2 border-gray-200 mx-4 my-2">
+            <div className="font-bold mx-1">총 수량 : {totalCnt}개</div>
+            <div className="font-bold mx-1 text-red-700">
+              총 가격 : {totalPrice}원
+            </div>
+          </div>
           {/* 버튼 */}
           <div className="flex justify-center">
             <Button variant="danger" className="px-10">
