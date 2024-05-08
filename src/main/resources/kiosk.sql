@@ -44,6 +44,12 @@ CREATE TABLE `orders_products_mapping` (
    `order_product_price` bigint NOT NULL
 );
 
+CREATE TABLE `temp_id_manager` (
+    `id` BIGINT NOT NULL,
+    `current_temp_id` INT DEFAULT 1,
+    PRIMARY KEY (id)
+);
+
 ALTER TABLE `orders_products_mapping` ADD CONSTRAINT `FK_orders_TO_orders_products_mapping_1` FOREIGN KEY (
    `order_id`
 )

@@ -3,8 +3,10 @@ package com.project.hanaro.kiosk.orders.repository;
 import com.project.hanaro.kiosk.orders.domain.Order;
 import com.project.hanaro.kiosk.orders.projection.OrderSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +28,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "join products c on b.product_id = c.product_id " +
             "where a.order_id = :id", nativeQuery = true)
     Optional<OrderSummary> getOrder(Long id);
+
 }
