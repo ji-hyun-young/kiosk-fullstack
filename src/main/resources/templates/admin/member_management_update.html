@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/default.html}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <title>회원 상세 관리</title>
+</head>
+<body>
+<div layout:fragment="content" id="adminMain">
+  <!-- 메인 영역 -->
+  <!-- 왼쪽 사이드메뉴 -->
+  <div id="adminSide">
+    <ul>
+      <li><a href="/admin/member">회원 관리</a></li>
+      <li><a href="/admin/product">상품 관리</a></li>
+      <li><a href="/admin/order">주문 관리</a></li>
+    </ul>
+  </div>
+
+  <!-- 오른쪽 컨텐츠 영역 -->
+  <div id="adminContent">
+    <div id="adminSection">
+      <div class="adminDiv">
+        <h3>회원 관리</h3>
+      </div>
+      <!-- 회원 정보 표시 -->
+      <div class="adminTableWrapper">
+        <table class="adminTable">
+          <tr>
+            <td>아이디</td>
+            <td><input id="loginId" th:value="*{member.loginId()}" /></td>
+          </tr>
+          <tr>
+            <td>암호</td>
+            <td><input id="password" th:value="*{member.password()}" /></td>
+          </tr>
+          <tr>
+            <td>이름</td>
+            <td><input id="nickname" th:value="*{member.nickname()}" /></td>
+          </tr>
+          <tr>
+            <td>권한</td>
+            <td th:text="*{member.role()}"></td>
+          </tr>
+          <tr>
+            <td>가입일</td>
+            <td><input id="createdAt" th:value="*{member.createdAt()}" /></td>
+          </tr>
+          <tr>
+            <td>적립금</td>
+            <td><input id="point" th:value="*{member.point()}" /></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 추가적인 회원 정보를 표시할 수 있음 -->
+
+      <!-- 수정하기, 취소 버튼 -->
+      <div>
+        <button type="button" onclick="editMember()">수정하기</button>
+        <button type="button" onclick="cancel()">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" id="memberId" th:value="${member.memberId()}" />
+
+  <script>
+    async function editMember() {
+      const memberId = document.getElementById("memberId").value;
+      const loginId = document.getElementById("loginId").value;
+      const password = document.getElementById("password").value;
+      const nickname = document.getElementById("nickname").value;
+      const point = parseInt(document.getElementById("point").value, 10);
+
+      const updatedMember = {
+        loginId: loginId,
+        password: password,
+        nickname: nickname,
+        point: point,
+      };
+
+      const url = "/api/v1/members/" + memberId;
+
+      try {
+        const res = await fetch(url, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedMember), // 수정된 회원 정보를 JSON 형식으로 전송
+        });
+
+        if (!res.ok) {
+          throw new Error("API 요청 실패");
+        }
+
+        const data = await res.json();
+        alert("수정되었습니다.");
+        location.href = "/admin/member";
+      } catch (error) {
+        console.error("API 요청 실패:", error.message);
+      }
+    }
+
+    function cancel() {
+      location.href = "/admin/member";
+    }
+  </script>
+</div>
+</body>
+</html>

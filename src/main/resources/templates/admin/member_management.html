@@ -17,8 +17,94 @@
       </div>
       <!-- 오른쪽 컨텐츠 영역 -->
       <div id="adminContent">
-        <p>회원 관리 화면입니다.</p>
+        <div id="adminSection">
+          <div class="adminDiv">
+            <h3>상품 관리</h3>
+          </div>
+          <div class="adminDiv2" id="tableTitle">
+            <div>목록 <span id="listCount"></span>건</div>
+          </div>
+          <div class="adminTableWrapper">
+            <table class="adminTable">
+              <thead>
+              <tr>
+                <th>번호</th>
+                <th>아이디</th>
+                <th>암호</th>
+                <th>이름</th>
+                <th>권한</th>
+                <th>가입일</th>
+                <th>수정</th>
+                <th>삭제</th>
+              </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
       </div>
+
+    <script>
+      window.onload = () => {
+        console.log(1)
+        getMemberList();
+      };
+
+      async function getMemberList() {
+        const url = "/api/v1/members?page=" + 0 + "&size=" + 100; // URL을 회원 목록 API로 변경
+
+        const res = await fetch(url);
+        if (!res.ok) {
+          console.error("API 요청 실패");
+          return;
+        }
+        const data = await res.json();
+        const listCountElement = document.getElementById("listCount");
+        listCountElement.innerText = data.totalElements;
+        const tableBody = document.querySelector(".adminTableWrapper table tbody"); // 테이블 body 요소 선택
+        tableBody.innerHTML = ""; // 기존 테이블 내용 초기화
+
+        // API에서 받아온 데이터를 반복하여 테이블에 추가
+        data.content.forEach((member, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${member.loginId}</td>
+          <td>${member.password}</td>
+          <td>${member.nickname}</td>
+          <td>${member.role}</td>
+          <td>${member.createdAt}</td>
+          <td><button class="edit-btn" onclick="redirectToUpdatePage(${member.memberId})">수정</button></td>
+          <td><button class="delete-btn" onclick="deleteMember(${member.memberId})">삭제</button></td>
+      `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      function redirectToUpdatePage(memberId) {
+        location.href = "/admin/member/mem-upd/" + memberId; // 경로를 회원 수정 페이지로 변경
+      }
+
+      async function deleteMember(memberId) {
+        const url = "/api/v1/members/mem-del/" + memberId; // URL을 회원 삭제 API로 변경
+
+        const res = await fetch(url, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json", // JSON 형식의 데이터 전송
+          },
+          // body 없음
+        });
+
+        if (!res.ok) {
+          console.error("API 요청 실패");
+          return;
+        }
+        const data = await res.json();
+        alert("삭제되었습니다.");
+        getMemberList(); // 함수명을 수정
+      }
+    </script>
     </div>
   </body>
 </html>

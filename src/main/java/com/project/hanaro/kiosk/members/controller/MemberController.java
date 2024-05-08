@@ -2,8 +2,12 @@ package com.project.hanaro.kiosk.members.controller;
 
 import com.project.hanaro.kiosk.members.dto.*;
 import com.project.hanaro.kiosk.members.service.MemberService;
+import com.project.hanaro.kiosk.products.dto.ProductUpsertRequest;
+import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +42,23 @@ public class MemberController {
     public ResponseEntity<Void> logout(HttpSession session) {
         session.invalidate(); // 세션 무효화
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Page<MemberGetResponse>> findMemberList (Pageable pageable) {
+        Page<MemberGetResponse> response = memberService.findMembers(pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/mem-del/{memberId}")
+    public ResponseEntity<MemberUpsertResponse> deleteMember(@PathVariable Long memberId){
+        MemberUpsertResponse response = memberService.deleteMember(memberId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{memberId}")
+    public ResponseEntity<MemberUpsertResponse> updateMember(@PathVariable Long memberId, @RequestBody MemberUpsertRequest memberUpsertRequest) {
+        MemberUpsertResponse response = memberService.updateMember(memberId, memberUpsertRequest);
+        return ResponseEntity.ok(response);
     }
 }
