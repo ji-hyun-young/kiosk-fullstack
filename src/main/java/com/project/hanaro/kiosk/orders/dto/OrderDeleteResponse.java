@@ -1,4 +1,10 @@
 package com.project.hanaro.kiosk.orders.dto;
 
-public record OrderDeleteResponse(String message) {
+import com.project.hanaro.kiosk.orders.domain.Order;
+
+public record OrderDeleteResponse(Long id) {
+
+    public static OrderDeleteResponse fromEntity(Order order) {
+        return new OrderDeleteResponse(order.getOrderId());
+    }
 }
