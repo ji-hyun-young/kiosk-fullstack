@@ -3,6 +3,8 @@ package com.project.hanaro.kiosk.admin.controller;
 import com.project.hanaro.kiosk.admin.service.AdminService;
 import com.project.hanaro.kiosk.members.dto.MemberGetResponse;
 import com.project.hanaro.kiosk.members.service.MemberService;
+import com.project.hanaro.kiosk.orders.dto.OrderGetResponse;
+import com.project.hanaro.kiosk.orders.service.OrderService;
 import com.project.hanaro.kiosk.products.dto.ProductGetResponse;
 import com.project.hanaro.kiosk.products.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class AdminController {
     private final AdminService adminService;
     private final ProductService productService;
     private final MemberService memberService;
+    private final OrderService orderService;
 
     @GetMapping("/admin")
     public String adminPage() {
@@ -51,5 +54,12 @@ public class AdminController {
     @GetMapping("/admin/order")
     public String adminOrderPage(){
         return "/admin/order_management";
+    }
+
+    @GetMapping("/admin/order/ord-upd/{orderId}")
+    public String adminOrderUpdatePage(@PathVariable Long orderId, Model model){
+        OrderGetResponse order = orderService.findOrder(orderId);
+        model.addAttribute("order", order);
+        return "/admin/order_management_update";
     }
 }

@@ -20,7 +20,8 @@ CREATE TABLE `orders` (
    `order_id`   bigint   NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `code`   VARCHAR(255)   NOT NULL,
    `temp_id`   bigint   NOT NULL,
-   `status`   VARCHAR(255)   NOT NULL,   
+   `status`   VARCHAR(255)   NOT NULL,
+   `delete_yn`  TINYINT(1) DEFAULT 0,
    `created_at`   TIMESTAMP   NOT NULL DEFAULT now(),
    `updated_at`   TIMESTAMP   NULL DEFAULT now(),
    `member_id`   bigint   NOT NULL
