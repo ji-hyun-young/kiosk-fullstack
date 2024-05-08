@@ -1,4 +1,12 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
+} from "react";
+import { Product } from "../globalTypes";
 
 type ProviderProps = {
   children: ReactNode;
@@ -7,32 +15,64 @@ type ProviderProps = {
 type OrderContextProps = {
   totalCnt: number;
   totalPrice: number;
-  updateTotalCnt: (count: number) => void;
-  updateTotalPrice: (price: number) => void;
+  saveItem: ({ id, name, price }: Product) => void;
+  removeItem: (id: number) => void;
+  cart: Product[];
 };
 
+type Action =
+  | { type: "saveItem"; payload: Product }
+  | { type: "removeItem"; payload: number };
+
 const OrderContext = createContext<OrderContextProps>({
-  totalCnt: 1,
+  totalCnt: 0,
   totalPrice: 0,
-  updateTotalCnt: () => {},
-  updateTotalPrice: () => {},
+  saveItem: () => {},
+  removeItem: () => {},
+  cart: [],
 });
 
+const reducer = (cart: Product[], { type, payload }: Action) => {
+  switch (type) {
+    case "saveItem":
+      return [...cart, payload];
+    case "removeItem":
+      return cart.filter((item: Product) => item.id !== payload);
+    default:
+      return cart;
+  }
+};
+
 export const OrderProvider = ({ children }: ProviderProps) => {
-  const [totalCnt, setTotalCount] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [cart, dispatch] = useReducer(reducer, []);
 
-  const updateTotalCnt = (count: number) => {
-    setTotalCount(count);
-  };
+  const saveItem = useCallback(
+    ({ id, name, price }: Product) =>
+      dispatch({ type: "saveItem", payload: { id, name, price } }),
+    []
+  );
 
-  const updateTotalPrice = (price: number) => {
-    setTotalPrice(price);
-  };
+  const removeItem = useCallback(
+    (id: number) => dispatch({ type: "removeItem", payload: id }),
+    []
+  );
+
+  const totalCnt = useMemo(() => cart.length, [cart]);
+
+  const totalPrice = useMemo(
+    () => cart.reduce((acc, cur) => acc + cur.price, 0),
+    [cart]
+  );
 
   return (
     <OrderContext.Provider
-      value={{ totalCnt, totalPrice, updateTotalCnt, updateTotalPrice }}
+      value={{
+        totalCnt,
+        totalPrice,
+        saveItem,
+        removeItem,
+        cart,
+      }}
     >
       {children}
     </OrderContext.Provider>

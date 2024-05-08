@@ -8,8 +8,6 @@ const Cart = () => {
     name: "불고기 버거",
     price: 5000,
   };
-  // const totalCnt = 2;
-  // const totalPrice = 10000;
   const { totalCnt, totalPrice } = useOrder();
 
   return (
@@ -41,8 +39,6 @@ const Cart = () => {
               결제하기
             </Button>
           </div>
-          {/* <button className="btn-danger">추가 주문</button> */}
-          {/* <button className="btn-green">결제하기</button> */}
         </div>
       </div>
     </div>
