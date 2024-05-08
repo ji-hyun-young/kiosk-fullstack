@@ -9,6 +9,9 @@ import com.project.hanaro.kiosk.orders.projection.OrderSummary;
 import com.project.hanaro.kiosk.orders.repository.OrderProductRepository;
 import com.project.hanaro.kiosk.orders.repository.OrderRepository;
 import com.project.hanaro.kiosk.orders.repository.TempIdManagerRepository;
+import com.project.hanaro.kiosk.products.domain.Product;
+import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
+import com.project.hanaro.kiosk.products.exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,16 +47,12 @@ public class OrderService {
                 .orElseThrow(OrderNotFoundException::new);
     }
 
-
+    @Transactional
     public OrderDeleteResponse deleteOrder(Long id) {
-//        List<Optional<OrderProduct>> orderProducts = orderProductRepository.findAllByOrderId(id);
-//        for (Optional<OrderProduct> optional : orderProducts) {
-//            optional.ifPresentOrElse((orderProduct -> orderProductRepository.delete(orderProduct)));
-//        }
-
-        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
-        orderRepository.deleteById(order.getOrderId());
-        return new OrderDeleteResponse("order deleted");
+        Order order = orderRepository.findById(id)
+            .orElseThrow(() -> new OrderNotFoundException(id));
+        order.setDeleteYn(true);
+        return OrderDeleteResponse.fromEntity(order);
     }
 
     @Transactional

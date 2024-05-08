@@ -37,11 +37,18 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name="delete_yn")
+    private Boolean deleteYn;
+
     @Builder
     public Order(Member member, String code, Integer tempId, OrderStatus status) {
         this.member = member;
         this.code = code;
         this.tempId = tempId;
         this.status = status;
+    }
+
+    public void setDeleteYn(boolean deleteYn) {
+        this.deleteYn = deleteYn;
     }
 }

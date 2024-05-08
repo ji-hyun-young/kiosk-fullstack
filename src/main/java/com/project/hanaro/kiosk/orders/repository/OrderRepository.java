@@ -18,6 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "from orders a " +
             "join orders_products_mapping b on a.order_id = b.order_id " +
             "join products c on b.product_id = c.product_id " +
+            "where a.delete_yn != 1 " +
             "GROUP BY a.order_id", nativeQuery = true)
     List<OrderSummary> getOrdersWithSumPriceAndSumCnt();
 
