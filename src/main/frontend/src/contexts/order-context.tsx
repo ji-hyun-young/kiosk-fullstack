@@ -35,7 +35,18 @@ const OrderContext = createContext<OrderContextProps>({
 const reducer = (cart: Item[], { type, payload }: Action) => {
   switch (type) {
     case "saveItem":
-      return [...cart, payload];
+      const existingItemIndex = cart.findIndex(
+        (item) => item.id === payload.id
+      );
+      if (existingItemIndex !== -1) {
+        // If item already exists in cart, update its quantity
+        const updatedCart = [...cart];
+        updatedCart[existingItemIndex].quantity!++;
+        return updatedCart;
+      } else {
+        // If item is not in cart, add it with quantity 1
+        return [...cart, { ...payload, quantity: 1 }];
+      }
     case "removeItem":
       return cart.filter((item: Item) => item.id !== payload);
     default:
@@ -57,10 +68,13 @@ export const OrderProvider = ({ children }: ProviderProps) => {
     []
   );
 
-  const totalCnt = useMemo(() => cart.length, [cart]);
+  const totalCnt = useMemo(
+    () => cart.reduce((acc, cur) => acc + cur.quantity!, 0),
+    [cart]
+  );
 
   const totalPrice = useMemo(
-    () => cart.reduce((acc, cur) => acc + cur.price, 0),
+    () => cart.reduce((acc, cur) => acc + cur.price * cur.quantity!, 0),
     [cart]
   );
 
