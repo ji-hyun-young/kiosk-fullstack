@@ -33,6 +33,9 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
+    @Column(name="delete_yn")
+    private Boolean deleteYn;
+
     @Builder
     public Member(Long memberId, String loginId, String password, String nickname, Integer point, MemberRole role) {
         this.memberId = memberId;
@@ -42,4 +45,33 @@ public class Member extends BaseEntity {
         this.point = point;
         this.role = role;
     }
+
+    public void setDeleteYn(Boolean deleteYn) {
+        this.deleteYn = deleteYn;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
+    public void setRole(MemberRole role) {
+        this.role = role;
+    }
+
 }

@@ -11,6 +11,7 @@ CREATE TABLE `members` (
    `nickname`   varchar(50)   NOT NULL,
    `point`   bigint   NOT NULL DEFAULT 0,
    `role`   varchar(50)   NULL,
+   `delete_yn`  TINYINT(1) DEFAULT 0,
    `created_at`   timestamp   NULL DEFAULT now(),
    `updated_at`   TIMESTAMP   NULL DEFAULT now()
 );
