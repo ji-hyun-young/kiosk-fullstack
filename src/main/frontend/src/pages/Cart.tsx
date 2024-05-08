@@ -1,4 +1,3 @@
-import { Button } from "../components/Button";
 import Order from "../components/Order";
 import { useOrder } from "../contexts/order-context";
 
@@ -32,12 +31,8 @@ const Cart = () => {
           </div>
           {/* 버튼 */}
           <div className="flex justify-center">
-            <Button variant="danger" className="px-10">
-              추가 주문
-            </Button>
-            <Button variant="green" className="px-10">
-              결제하기
-            </Button>
+            <button className="btn-danger px-10">추가 주문</button>
+            <button className="btn-green px-10">결제하기</button>
           </div>
         </div>
       </div>

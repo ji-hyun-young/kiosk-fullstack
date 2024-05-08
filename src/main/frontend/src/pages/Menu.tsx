@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import Category from "../components/Category";
 
 const Menu = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="h-[100vh]">
       <div>
@@ -13,9 +16,12 @@ const Menu = () => {
           <span className="font-bold mx-2">
             <span className="text-red-700">홍길동</span>님 환영합니다.
           </span>
-          <Button variant="green" className="px-10">
+          <button
+            className="btn-green px-10 mt-1"
+            onClick={() => navigate("/place")}
+          >
             이전
-          </Button>
+          </button>
         </div>
         {/* 카테고리 */}
         <div className="w-1/4 mx-1 flex flex-col justify-center items-center">
