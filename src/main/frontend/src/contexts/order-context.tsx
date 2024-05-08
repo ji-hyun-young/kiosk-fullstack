@@ -6,7 +6,7 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { Product } from "../globalTypes";
+import { Item } from "../globalTypes";
 
 type ProviderProps = {
   children: ReactNode;
@@ -15,13 +15,13 @@ type ProviderProps = {
 type OrderContextProps = {
   totalCnt: number;
   totalPrice: number;
-  saveItem: ({ id, name, price }: Product) => void;
+  saveItem: ({ id, name, price }: Item) => void;
   removeItem: (id: number) => void;
-  cart: Product[];
+  cart: Item[];
 };
 
 type Action =
-  | { type: "saveItem"; payload: Product }
+  | { type: "saveItem"; payload: Item }
   | { type: "removeItem"; payload: number };
 
 const OrderContext = createContext<OrderContextProps>({
@@ -32,12 +32,12 @@ const OrderContext = createContext<OrderContextProps>({
   cart: [],
 });
 
-const reducer = (cart: Product[], { type, payload }: Action) => {
+const reducer = (cart: Item[], { type, payload }: Action) => {
   switch (type) {
     case "saveItem":
       return [...cart, payload];
     case "removeItem":
-      return cart.filter((item: Product) => item.id !== payload);
+      return cart.filter((item: Item) => item.id !== payload);
     default:
       return cart;
   }
@@ -47,7 +47,7 @@ export const OrderProvider = ({ children }: ProviderProps) => {
   const [cart, dispatch] = useReducer(reducer, []);
 
   const saveItem = useCallback(
-    ({ id, name, price }: Product) =>
+    ({ id, name, price }: Item) =>
       dispatch({ type: "saveItem", payload: { id, name, price } }),
     []
   );
