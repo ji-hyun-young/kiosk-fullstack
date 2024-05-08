@@ -6,6 +6,7 @@ import Cart from "./pages/Cart";
 
 import Login from "./pages/Login";
 import { OrderProvider } from "./contexts/order-context";
+import Menu from "./pages/Menu";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/place" element={<Place />} />
         <Route path="/order" element={<Cart />} />
+        <Route path="/menu" element={<Menu />} />
       </Routes>
     </OrderProvider>
   );

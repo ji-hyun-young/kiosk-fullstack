@@ -1,6 +1,6 @@
 const Place = () => {
   return (
-    <div className="w-128 h-128 bg-green-900">
+    <div className="h-[100vh] bg-green-900">
       <div className="h-1/4 flex justify-evenly items-center">
         <img src="/img/Mcdonald_Logo.png" className="w-24 h-24" />
         <span className="text-white font-bold text-lg">
