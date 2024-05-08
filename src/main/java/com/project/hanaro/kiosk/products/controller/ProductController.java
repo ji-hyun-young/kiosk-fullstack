@@ -92,4 +92,15 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 상품 삭제 ( deleteYn 값 변경 )
+     * @param productId
+     * @return
+     */
+    @PatchMapping("/api/v1/products/prod-del/{productId}")
+    public ResponseEntity<ProductUpsertResponse> deleteProduct(@PathVariable Long productId){
+        ProductUpsertResponse response = productService.deleteProduct(productId);
+        return ResponseEntity.ok(response);
+    }
+
 }

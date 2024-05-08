@@ -73,14 +73,38 @@
             row.innerHTML = `
             <td>${index + 1}</td>
             <td>${product.name}</td>
-            <td>${product.imageUrl}</td>
+            <td><img src="${product.imageUrl}" alt="${product.name}" style="max-width: 100px; max-height: 100px;"></td>
             <td>${product.price}</td>
             <td>${product.option}</td>
-            <td><button class="edit-btn">Edit</button></td>
-            <td><button class="delete-btn">Delete</button></td>
+            <td><button class="edit-btn" onclick="redirectToUpdatePage(${product.productId})">수정</button></td>
+            <td><button class="delete-btn" onclick="deleteProduct(${product.productId})">삭제</button></td>
         `;
             tableBody.appendChild(row);
           });
+        }
+
+        function redirectToUpdatePage(productId) {
+          location.href = "/admin/product/prod-upd/" + productId;
+        }
+
+        async function deleteProduct(productId) {
+          const url = "/api/v1/products/prod-del/" + productId;
+
+          const res = await fetch(url, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json", // JSON 형식의 데이터 전송
+            },
+            // body 없음
+          });
+
+          if (!res.ok) {
+            console.error("API 요청 실패");
+            return;
+          }
+          const data = await res.json();
+          alert("삭제되었습니다.");
+          getProductList();
         }
       </script>
     </div>
