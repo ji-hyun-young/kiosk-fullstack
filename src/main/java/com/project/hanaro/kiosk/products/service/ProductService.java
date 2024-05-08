@@ -75,4 +75,12 @@ public class ProductService {
         Product savedProduct = request.updateEntity(product);
         return ProductImageUpsertResponse.fromEntity(savedProduct);
     }
+
+    @Transactional
+    public ProductUpsertResponse deleteProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ProductNotFoundException(productId));
+        product.setDeleteYn(true);
+        return ProductUpsertResponse.fromEntity(product);
+    }
 }

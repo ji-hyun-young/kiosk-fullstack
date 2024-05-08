@@ -41,15 +41,19 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductType type;
 
+    @Column(name="delete_yn")
+    private Boolean deleteYn;
+
     @Builder
     public Product(Long productId, String name, String imageUrl, Long price, ProductOption option,
-        ProductType type) {
+        ProductType type, Boolean deleteYn) {
         this.productId = productId;
         this.name = name;
         this.imageUrl = imageUrl;
         this.price = price;
         this.option = option;
         this.type = type;
+        this.deleteYn = deleteYn;
     }
 
     public void setName(String name) {
@@ -70,5 +74,9 @@ public class Product extends BaseEntity {
 
     public void setType(ProductType type) {
         this.type = type;
+    }
+
+    public void setDeleteYn(boolean deleteYn) {
+        this.deleteYn = deleteYn;
     }
 }

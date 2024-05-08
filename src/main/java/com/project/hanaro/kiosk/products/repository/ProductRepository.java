@@ -14,6 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT * FROM products p "
         + "WHERE ( :productOption = 'ALL' OR p.product_option = :productOption) "
+        + "AND p.delete_yn != 1 "
         + "ORDER BY p.product_id",
         countQuery = "SELECT COUNT(*) FROM products",
         nativeQuery = true
@@ -21,6 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> getPageByProductOption(String productOption, Pageable pageable);
 
     @Query(value = "SELECT * FROM products p "
+        + "WHERE p.delete_yn != 1 "
         + "ORDER BY p.price",
         countQuery = "SELECT COUNT(*) FROM products",
         nativeQuery = true
