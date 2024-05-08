@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Item } from "../globalTypes";
 import { useOrder } from "../contexts/order-context";
 
@@ -7,32 +7,42 @@ type Props = {
 };
 
 const Order = ({ product }: Props) => {
-  const { saveItem, removeItem } = useOrder();
-  const [count, setCount] = useState(1);
+  const { saveItem, removeItem, cart } = useOrder();
+  // const [count, setCount] = useState(1);
 
-  const plusCount = () => {
-    setCount((prev) => prev + 1);
-    saveItem(product);
+  const itemInCart = cart.find((item) => item.id === product.id);
+  const quantity = itemInCart ? itemInCart.quantity : 1;
+
+  const plusCount = (quantity: number) => {
+    // setCount((prev) => prev + 1);
+    const updatedQuantity = quantity + 1;
+    saveItem({ ...product, quantity: updatedQuantity });
   };
 
-  const minusCount = () => {
-    setCount((prev) => prev - 1);
-    removeItem(product.id);
+  const minusCount = (quantity: number) => {
+    if (quantity === 1) {
+      return; // 최소 수량에 도달했을 때 아무것도 하지 않음
+    }
+    // setCount((prev) => prev - 1); // 수량 1 감소
+    const updatedQuantity = quantity - 1;
+    saveItem({ ...product, quantity: updatedQuantity });
+    // saveItem({ ...product, quantity: quantity - 1 });
   };
 
   const handleCount = (e: React.MouseEvent<HTMLButtonElement>) => {
     const name = e.currentTarget.name;
 
     if (name === "plusBtn") {
-      plusCount();
+      plusCount(quantity!);
     }
 
     if (name === "minusBtn") {
-      if (count === 1) {
-        return;
-      }
-      minusCount();
+      minusCount(quantity!);
     }
+  };
+
+  const handleDelete = () => {
+    removeItem(product.id);
   };
   return (
     <div className="h-10 flex justify-center items-center border-b-2 border-gray-200 mx-4 my-2">
@@ -52,7 +62,7 @@ const Order = ({ product }: Props) => {
           <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
         </svg>
       </button>
-      <div>{count}개</div>
+      <div>{quantity}개</div>
       <button
         className="border size-5 bg-gray-50 rounded text-center flex justify-center items-center mx-1"
         name="plusBtn"
@@ -67,7 +77,9 @@ const Order = ({ product }: Props) => {
           <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
         </svg>
       </button>
-      <button className="btn-delete">삭제</button>
+      <button className="btn-delete" onClick={handleDelete}>
+        삭제
+      </button>
     </div>
   );
 };
