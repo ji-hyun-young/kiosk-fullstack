@@ -1,5 +1,6 @@
 import { Button } from "../components/Button";
 import Order from "../components/Order";
+import { useOrder } from "../contexts/order-context";
 
 const Cart = () => {
   const product = {
@@ -7,8 +8,10 @@ const Cart = () => {
     name: "불고기 버거",
     price: 5000,
   };
-  const totalCnt = 2;
-  const totalPrice = 10000;
+  // const totalCnt = 2;
+  // const totalPrice = 10000;
+  const { totalCnt, totalPrice } = useOrder();
+
   return (
     <div className="h-[100vh] bg-green-900">
       <div className="h-1/5 flex justify-center items-center">
