@@ -34,7 +34,7 @@ public class Member extends BaseEntity {
     private MemberRole role;
 
     @Column(name="delete_yn")
-    private Boolean deleteYn;
+    private Boolean deleteYn = false;
 
     @Builder
     public Member(Long memberId, String loginId, String password, String nickname, Integer point, MemberRole role) {

@@ -42,7 +42,7 @@ public class Product extends BaseEntity {
     private ProductType type;
 
     @Column(name="delete_yn")
-    private Boolean deleteYn;
+    private Boolean deleteYn = false;
 
     @Builder
     public Product(Long productId, String name, String imageUrl, Long price, ProductOption option,

@@ -20,6 +20,7 @@ const Menu = () => {
   const { addItem, cart, totalCnt, totalPrice } = useOrder();
 
   const memberId = localStorage.getItem("memberId");
+  const nickname = localStorage.getItem("nickname");
   const [productList, setProductList] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const productsPerPage = 9;
@@ -99,7 +100,7 @@ const Menu = () => {
           {memberId !== "-1" ? (
             <span className="font-bold mx-2">
               {/* 회원별 이름 조회 기능 수정 */}
-              <span className="text-red-700">홍길동</span>님 환영합니다.
+              <span className="text-red-700">{nickname}</span>님 환영합니다.
             </span>
           ) : (
             <div></div>

@@ -9,6 +9,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import lombok.Builder.Default;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity(name = "orders")
 @Getter
@@ -38,7 +40,7 @@ public class Order extends BaseEntity {
     private OrderStatus status;
 
     @Column(name="delete_yn")
-    private Boolean deleteYn;
+    private Boolean deleteYn = false;
 
     @Builder
     public Order(Member member, String code, Integer tempId, OrderStatus status) {
