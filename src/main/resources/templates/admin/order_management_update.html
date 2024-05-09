@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/default.html}"
+      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>주문 상세 관리</title>
+  </head>
+  <body>
+    <div layout:fragment="content" id="adminMain">
+      <!-- 메인 영역 -->
+      <!-- 왼쪽 사이드메뉴 -->
+      <div id="adminSide">
+        <ul>
+          <li><a href="/admin/member">회원 관리</a></li>
+          <li><a href="/admin/product">상품 관리</a></li>
+          <li><a href="/admin/order">주문 관리</a></li>
+        </ul>
+      </div>
+
+      <!-- 오른쪽 컨텐츠 영역 -->
+      <div id="adminContent">
+        <div id="adminSection">
+          <div class="adminDiv">
+            <h3>주문 상세 관리</h3>
+          </div>
+          <!-- 상품 정보 표시 -->
+          <div class="adminTableWrapper">
+            <table class="adminTable">
+              <tr>
+                <td>주문코드</td>
+                <td id="code" th:text="*{order.code}"></td>
+              </tr>
+              <tr>
+                <td>주문총금액</td>
+                <td id="sumPrice" th:text="*{order.sumPrice}" /></td>
+              </tr>
+              <tr>
+                <td>주문상품개수</td>
+                <td id="sumCnt" th:text="*{order.sumCnt}" /></td>
+              </tr>
+              <tr>
+                <td>임시번호</td>
+                <td th:text="*{order.tempId}"></td>
+              </tr>
+              <tr>
+                <td>주문상태</td>
+                <td th:text="*{order.status}"></td>
+              </tr>
+              <tr>
+                <td>결제시간</td>
+                <td th:text="*{order.createdAt}"></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- 추가적인 상품 정보를 표시할 수 있음 -->
+
+          <!-- 수정하기, 취소 버튼 -->
+          <div>
+            <button type="button" onclick="cancel()">취소</button>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" id="orderId" th:value="${order.orderId}" />
+
+      <script>
+        function cancel() {
+          location.href = "/admin/order";
+        }
+      </script>
+    </div>
+  </body>
+</html>

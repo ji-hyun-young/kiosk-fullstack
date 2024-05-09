@@ -159,3 +159,7 @@ html, body {
  	border: none;
  	background: none;
  }
+
+table {
+  border-collapse: collapse;
+ }

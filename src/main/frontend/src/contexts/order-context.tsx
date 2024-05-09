@@ -6,7 +6,7 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { Product } from "../globalTypes";
+import { Item } from "../globalTypes";
 
 type ProviderProps = {
   children: ReactNode;
@@ -15,29 +15,52 @@ type ProviderProps = {
 type OrderContextProps = {
   totalCnt: number;
   totalPrice: number;
-  saveItem: ({ id, name, price }: Product) => void;
+  addItem: ({ id, name, price }: Item) => void;
   removeItem: (id: number) => void;
-  cart: Product[];
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
+  cart: Item[];
 };
 
 type Action =
-  | { type: "saveItem"; payload: Product }
-  | { type: "removeItem"; payload: number };
+  | { type: "addItem"; payload: Item }
+  | { type: "removeItem"; payload: number }
+  | { type: "increaseQuantity"; payload: number }
+  | { type: "decreaseQuantity"; payload: number };
 
 const OrderContext = createContext<OrderContextProps>({
   totalCnt: 0,
   totalPrice: 0,
-  saveItem: () => {},
+  addItem: () => {},
   removeItem: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
   cart: [],
 });
 
-const reducer = (cart: Product[], { type, payload }: Action) => {
+const reducer = (cart: Item[], { type, payload }: Action) => {
   switch (type) {
-    case "saveItem":
-      return [...cart, payload];
+    case "addItem":
+      const existingItemIndex = cart.findIndex(
+        (item) => item.id === payload.id
+      );
+      if (existingItemIndex !== -1) {
+        const updatedCart = [...cart];
+        updatedCart[existingItemIndex].quantity!++;
+        return updatedCart;
+      } else {
+        return [...cart, { ...payload, quantity: 1 }];
+      }
+    case "increaseQuantity":
+      return cart.map((item) =>
+        item.id === payload ? { ...item, quantity: item.quantity! + 1 } : item
+      );
+    case "decreaseQuantity":
+      return cart.map((item) =>
+        item.id === payload ? { ...item, quantity: item.quantity! - 1 } : item
+      );
     case "removeItem":
-      return cart.filter((item: Product) => item.id !== payload);
+      return cart.filter((item: Item) => item.id !== payload);
     default:
       return cart;
   }
@@ -46,9 +69,19 @@ const reducer = (cart: Product[], { type, payload }: Action) => {
 export const OrderProvider = ({ children }: ProviderProps) => {
   const [cart, dispatch] = useReducer(reducer, []);
 
-  const saveItem = useCallback(
-    ({ id, name, price }: Product) =>
-      dispatch({ type: "saveItem", payload: { id, name, price } }),
+  const addItem = useCallback(
+    ({ id, name, price }: Item) =>
+      dispatch({ type: "addItem", payload: { id, name, price } }),
+    []
+  );
+
+  const increaseQuantity = useCallback(
+    (id: number) => dispatch({ type: "increaseQuantity", payload: id }),
+    []
+  );
+
+  const decreaseQuantity = useCallback(
+    (id: number) => dispatch({ type: "decreaseQuantity", payload: id }),
     []
   );
 
@@ -57,10 +90,13 @@ export const OrderProvider = ({ children }: ProviderProps) => {
     []
   );
 
-  const totalCnt = useMemo(() => cart.length, [cart]);
+  const totalCnt = useMemo(
+    () => cart.reduce((acc, cur) => acc + cur.quantity!, 0),
+    [cart]
+  );
 
   const totalPrice = useMemo(
-    () => cart.reduce((acc, cur) => acc + cur.price, 0),
+    () => cart.reduce((acc, cur) => acc + cur.price * cur.quantity!, 0),
     [cart]
   );
 
@@ -69,8 +105,10 @@ export const OrderProvider = ({ children }: ProviderProps) => {
       value={{
         totalCnt,
         totalPrice,
-        saveItem,
+        addItem,
         removeItem,
+        increaseQuantity,
+        decreaseQuantity,
         cart,
       }}
     >

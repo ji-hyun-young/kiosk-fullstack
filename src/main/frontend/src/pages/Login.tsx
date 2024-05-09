@@ -33,6 +33,7 @@ const Login = () => {
 
       const responseData = await response.json(); // 응답 데이터를 JSON으로 파싱
       console.log(responseData); // 응답 로그 출력
+      localStorage.setItem("memberId", responseData.memberId);
       alert("로그인 성공!");
       navigate("/place");
     } catch (error) {
@@ -64,6 +65,7 @@ const Login = () => {
 
       const responseData = await response.json(); // 응답 데이터를 JSON으로 파싱
       console.log(responseData); // 응답 로그 출력
+      localStorage.setItem("memberId", responseData.memberId);
       alert("비회원 로그인 성공!");
       navigate("/place");
     } catch (error) {

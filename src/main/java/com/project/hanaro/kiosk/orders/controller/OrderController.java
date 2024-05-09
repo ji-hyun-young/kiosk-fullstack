@@ -2,6 +2,7 @@ package com.project.hanaro.kiosk.orders.controller;
 
 import com.project.hanaro.kiosk.orders.dto.*;
 import com.project.hanaro.kiosk.orders.service.OrderService;
+import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +37,10 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/api/v1/orders/{id}")
-    public ResponseEntity<OrderDeleteResponse> deleteOrder(@PathVariable Long id) {
-        OrderDeleteResponse response = orderService.deleteOrder(id);
+    @PatchMapping("/api/v1/orders/ord-del/{orderId}")
+    public ResponseEntity<OrderDeleteResponse> deleteOrder(@PathVariable Long orderId){
+        OrderDeleteResponse response = orderService.deleteOrder(orderId);
         return ResponseEntity.ok(response);
     }
-
 
 }
