@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useOrder } from "../contexts/order-context";
 
 const Payment = () => {
   const { totalCnt, totalPrice, cart } = useOrder();
+  const navigate = useNavigate();
 
   const memberId = localStorage.getItem("memberId");
   console.log(memberId);
@@ -39,6 +41,10 @@ const Payment = () => {
       const data = await response.json();
 
       console.log(data);
+      const tempId = data.tempId;
+      localStorage.setItem("tempId", tempId);
+
+      setTimeout(() => navigate("/complete"));
     } catch (error) {
       console.error("API 요청 중 오류 발생:", error);
     }
@@ -54,13 +60,14 @@ const Payment = () => {
           주문을 확인하세요.
         </span>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col justify-center items-center">
         <div className="h-15 w-5/6 bg-white rounded text-center flex justify-center items-center">
           <span className="font-bold mx-2">총 수량: {totalCnt}개</span>
           <span className="font-bold text-red-700 mx-2">
             총 가격: {totalPrice}원
           </span>
         </div>
+        <img src="/img/payment.png" className="w-48 h-60 rounded-lg" />
       </div>
     </div>
   );
