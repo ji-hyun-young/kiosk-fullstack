@@ -41,7 +41,12 @@ const Cart = () => {
             >
               추가 주문
             </button>
-            <button className="btn-green px-10">결제하기</button>
+            <button
+              className="btn-green px-10"
+              onClick={() => navigate("/pay")}
+            >
+              결제하기
+            </button>
           </div>
         </div>
       </div>

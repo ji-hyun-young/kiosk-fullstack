@@ -8,6 +8,7 @@ import Menu from "./pages/Menu";
 import Login from "./pages/Login";
 
 import Join from "./pages/Join";
+import Payment from "./pages/Payment";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
         <Route path="/place" element={<Place />} />
         <Route path="/order" element={<Cart />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/pay" element={<Payment />} />
       </Routes>
-   </OrderProvider>
+    </OrderProvider>
   );
 }
 
