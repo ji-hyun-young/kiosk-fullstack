@@ -50,7 +50,7 @@ public class OrderService {
     @Transactional
     public OrderDeleteResponse deleteOrder(Long id) {
         Order order = orderRepository.findById(id)
-            .orElseThrow(() -> new OrderNotFoundException(id));
+                .orElseThrow(() -> new OrderNotFoundException(id));
         order.setDeleteYn(true);
         return OrderDeleteResponse.fromEntity(order);
     }
@@ -65,7 +65,7 @@ public class OrderService {
 
         //주문번호
         TempIdManager tempIdManager = tempIdManagerRepository.findAll().stream().findFirst()
-                .orElse(TempIdManager.builder().currentTempId(1).build());
+                .orElse(TempIdManager.builder().currentTempId(0).build());
         Integer currentTempId = tempIdManager.getCurrentTempId();
         savedOrder.setTempId(currentTempId);
 
@@ -79,6 +79,6 @@ public class OrderService {
                 })
                 .collect(Collectors.toList());
 
-        return new OrderSaveResponse(orderProductIds);
+        return new OrderSaveResponse(orderProductIds, currentTempId);
     }
 }

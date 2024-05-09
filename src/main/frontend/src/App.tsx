@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 
 import Join from "./pages/Join";
 import Payment from "./pages/Payment";
+import OrderCompl from "./pages/OrderCompl";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/order" element={<Cart />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/pay" element={<Payment />} />
+        <Route path="/complete" element={<OrderCompl />} />
       </Routes>
     </OrderProvider>
   );

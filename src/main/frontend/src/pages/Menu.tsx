@@ -124,7 +124,7 @@ const Menu = () => {
             />
             <Category
               name="버거"
-              imgSrc="/img/burger_set.png"
+              imgSrc="/img/burger.png"
               onClick={() => handleCategoryChange("SINGLE")}
             />
             <Category

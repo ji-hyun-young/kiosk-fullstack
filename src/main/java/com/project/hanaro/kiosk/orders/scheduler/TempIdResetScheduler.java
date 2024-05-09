@@ -19,8 +19,8 @@ public class TempIdResetScheduler {
     @Scheduled(cron = "0 * * * * ?") //test용 1분
     public void resetTempId() {
         TempIdManager tempIdManager = tempIdManagerRepository.findById(1L)
-                .orElse(TempIdManager.builder().currentTempId(1).build());
-        tempIdManager.setCurrentTempId(1); // 자정이 되면 temp_id를 1로 리셋
+                .orElse(TempIdManager.builder().currentTempId(0).build());
+        tempIdManager.setCurrentTempId(0); // 자정이 되면 temp_id를 1로 리셋
         tempIdManagerRepository.save(tempIdManager);
         System.out.println("주문번호 리셋완료.");
     }
