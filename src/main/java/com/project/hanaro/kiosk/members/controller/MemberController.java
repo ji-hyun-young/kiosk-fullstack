@@ -2,8 +2,6 @@ package com.project.hanaro.kiosk.members.controller;
 
 import com.project.hanaro.kiosk.members.dto.*;
 import com.project.hanaro.kiosk.members.service.MemberService;
-import com.project.hanaro.kiosk.products.dto.ProductUpsertRequest;
-import com.project.hanaro.kiosk.products.dto.ProductUpsertResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +26,7 @@ public class MemberController {
     public ResponseEntity<MemberLoginResponse> memberLogin(@RequestBody MemberLoginRequest request, HttpSession session) {
         MemberLoginResponse response = memberService.memberLogin(request);
         session.setAttribute("memberId", response.memberId());
+        session.setAttribute("nickname", response.nickname());
         return ResponseEntity.ok(response);
     }
 
