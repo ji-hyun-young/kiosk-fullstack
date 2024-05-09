@@ -64,14 +64,11 @@ public class OrderService {
         savedOrder.setCode(uuid.toString());
 
         //주문번호
-        TempIdManager tempIdManager = tempIdManagerRepository.findById(1L)
-                .orElse(new TempIdManager(1L));
+        TempIdManager tempIdManager = tempIdManagerRepository.findAll().stream().findFirst()
+                .orElse(TempIdManager.builder().currentTempId(1).build());
         Integer currentTempId = tempIdManager.getCurrentTempId();
         savedOrder.setTempId(currentTempId);
 
-        // temp_id 업데이트 (9999에 도달하면 1로 리셋)
-        currentTempId = currentTempId >= 9999 ? 1 : currentTempId + 1;
-        tempIdManager.setCurrentTempId(currentTempId);
         tempIdManagerRepository.save(tempIdManager);
 
         List<Long> orderProductIds = orderProductInsertRequests.stream()
