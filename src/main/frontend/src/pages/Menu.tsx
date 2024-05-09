@@ -17,7 +17,7 @@ type Product = {
 
 const Menu = () => {
   const navigate = useNavigate();
-  const { saveItem, cart, totalCnt, totalPrice } = useOrder();
+  const { addItem, cart, totalCnt, totalPrice } = useOrder();
 
   const memberId = localStorage.getItem("memberId");
   const [productList, setProductList] = useState<Product[]>([]);
@@ -70,7 +70,7 @@ const Menu = () => {
 
   // 카테고리별 상품 목록을 클릭할 때 실행될 함수
   const addToCart = (product: Product) => {
-    saveItem({
+    addItem({
       id: product.productId,
       name: product.name,
       price: product.price,

@@ -15,38 +15,50 @@ type ProviderProps = {
 type OrderContextProps = {
   totalCnt: number;
   totalPrice: number;
-  saveItem: ({ id, name, price }: Item) => void;
+  addItem: ({ id, name, price }: Item) => void;
   removeItem: (id: number) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
   cart: Item[];
 };
 
 type Action =
-  | { type: "saveItem"; payload: Item }
-  | { type: "removeItem"; payload: number };
+  | { type: "addItem"; payload: Item }
+  | { type: "removeItem"; payload: number }
+  | { type: "increaseQuantity"; payload: number }
+  | { type: "decreaseQuantity"; payload: number };
 
 const OrderContext = createContext<OrderContextProps>({
   totalCnt: 0,
   totalPrice: 0,
-  saveItem: () => {},
+  addItem: () => {},
   removeItem: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
   cart: [],
 });
 
 const reducer = (cart: Item[], { type, payload }: Action) => {
   switch (type) {
-    case "saveItem":
+    case "addItem":
       const existingItemIndex = cart.findIndex(
         (item) => item.id === payload.id
       );
       if (existingItemIndex !== -1) {
-        // If item already exists in cart, update its quantity
         const updatedCart = [...cart];
         updatedCart[existingItemIndex].quantity!++;
         return updatedCart;
       } else {
-        // If item is not in cart, add it with quantity 1
         return [...cart, { ...payload, quantity: 1 }];
       }
+    case "increaseQuantity":
+      return cart.map((item) =>
+        item.id === payload ? { ...item, quantity: item.quantity! + 1 } : item
+      );
+    case "decreaseQuantity":
+      return cart.map((item) =>
+        item.id === payload ? { ...item, quantity: item.quantity! - 1 } : item
+      );
     case "removeItem":
       return cart.filter((item: Item) => item.id !== payload);
     default:
@@ -57,9 +69,19 @@ const reducer = (cart: Item[], { type, payload }: Action) => {
 export const OrderProvider = ({ children }: ProviderProps) => {
   const [cart, dispatch] = useReducer(reducer, []);
 
-  const saveItem = useCallback(
+  const addItem = useCallback(
     ({ id, name, price }: Item) =>
-      dispatch({ type: "saveItem", payload: { id, name, price } }),
+      dispatch({ type: "addItem", payload: { id, name, price } }),
+    []
+  );
+
+  const increaseQuantity = useCallback(
+    (id: number) => dispatch({ type: "increaseQuantity", payload: id }),
+    []
+  );
+
+  const decreaseQuantity = useCallback(
+    (id: number) => dispatch({ type: "decreaseQuantity", payload: id }),
     []
   );
 
@@ -83,8 +105,10 @@ export const OrderProvider = ({ children }: ProviderProps) => {
       value={{
         totalCnt,
         totalPrice,
-        saveItem,
+        addItem,
         removeItem,
+        increaseQuantity,
+        decreaseQuantity,
         cart,
       }}
     >

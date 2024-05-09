@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { Item } from "../globalTypes";
 import { useOrder } from "../contexts/order-context";
 
@@ -7,43 +6,27 @@ type Props = {
 };
 
 const Order = ({ product }: Props) => {
-  const { saveItem, removeItem, cart } = useOrder();
-  // const [count, setCount] = useState(1);
+  const { removeItem, cart, increaseQuantity, decreaseQuantity } = useOrder();
 
   const itemInCart = cart.find((item) => item.id === product.id);
   const quantity = itemInCart ? itemInCart.quantity : 1;
 
-  const plusCount = (quantity: number) => {
-    // setCount((prev) => prev + 1);
-    const updatedQuantity = quantity + 1;
-    saveItem({ ...product, quantity: updatedQuantity });
+  const plusCount = (id: number) => {
+    increaseQuantity(id);
   };
 
-  const minusCount = (quantity: number) => {
+  const minusCount = (id: number) => {
     if (quantity === 1) {
-      return; // 최소 수량에 도달했을 때 아무것도 하지 않음
-    }
-    // setCount((prev) => prev - 1); // 수량 1 감소
-    const updatedQuantity = quantity - 1;
-    saveItem({ ...product, quantity: updatedQuantity });
-    // saveItem({ ...product, quantity: quantity - 1 });
-  };
-
-  const handleCount = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const name = e.currentTarget.name;
-
-    if (name === "plusBtn") {
-      plusCount(quantity!);
+      return;
     }
 
-    if (name === "minusBtn") {
-      minusCount(quantity!);
-    }
+    decreaseQuantity(id);
   };
 
   const handleDelete = () => {
     removeItem(product.id);
   };
+
   return (
     <div className="h-10 flex justify-center items-center border-b-2 border-gray-200 mx-4 my-2">
       <span className="mx-1">{product.name}</span> -{" "}
@@ -51,7 +34,7 @@ const Order = ({ product }: Props) => {
       <button
         className="border size-5 bg-gray-50 rounded text-center flex justify-center items-center mx-1"
         name="minusBtn"
-        onClick={handleCount}
+        onClick={() => minusCount(product.id)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -62,11 +45,11 @@ const Order = ({ product }: Props) => {
           <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
         </svg>
       </button>
-      <div>{quantity}개</div>
+      <div>{product.quantity}개</div>
       <button
         className="border size-5 bg-gray-50 rounded text-center flex justify-center items-center mx-1"
         name="plusBtn"
-        onClick={handleCount}
+        onClick={() => plusCount(product.id)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

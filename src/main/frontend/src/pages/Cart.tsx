@@ -3,11 +3,6 @@ import Order from "../components/Order";
 import { useOrder } from "../contexts/order-context";
 
 const Cart = () => {
-  // const product = {
-  //   id: 1,
-  //   name: "불고기 버거",
-  //   price: 5000,
-  // };
   const { totalCnt, totalPrice, cart } = useOrder();
   const navigate = useNavigate();
 
@@ -30,8 +25,6 @@ const Cart = () => {
           {uniqueCartItems.map((item, index) => (
             <Order key={index} product={item!} />
           ))}
-          {/* <Order product={product} />
-          <Order product={product} /> */}
 
           {/* 총 수량, 총 금액 */}
           <div className="h-10 flex justify-end items-end border-b-2 border-gray-200 mx-4 my-2">
