@@ -65,6 +65,11 @@ public class MemberService {
         return MemberGetResponse.fromEntity(member);
     }
 
+    public MemberPointResponse findPoint(Long memberId) {
+
+        return new MemberPointResponse(memberId, memberRepository.findById(memberId).get().getPoint());
+    }
+
     @Transactional
     public MemberUpsertResponse deleteMember(Long memberId) {
         Member member = memberRepository.findById(memberId)
@@ -80,5 +85,7 @@ public class MemberService {
         Member savedMember = request.updateEntity(member);
         return MemberUpsertResponse.fromEntity(savedMember);
     }
+
+
 
 }
