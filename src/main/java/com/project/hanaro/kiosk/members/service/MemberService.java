@@ -44,7 +44,7 @@ public class MemberService {
             throw new MemberInvalidException();
         }
 
-        return new MemberLoginResponse(member.getMemberId());
+        return new MemberLoginResponse(member.getMemberId(), member.getNickname());
     }
 
     public MemberGuestLoginResponse memberGuestLogin(MemberGuestLoginRequest request) {
