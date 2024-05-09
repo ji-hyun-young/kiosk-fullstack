@@ -25,11 +25,15 @@ const Menu = () => {
   const productsPerPage = 9;
 
   const getProductList = async (category: string) => {
+    let url;
+    if (category === "suggest") {
+      url = `http://localhost:8080/api/v1/products/${category}`;
+    } else {
+      url = `http://localhost:8080/api/v1/products?productOption=${category}`;
+    }
+
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/products/${category}`,
-        { method: "GET" }
-      );
+      const response = await fetch(url, { method: "GET" });
       // 카테고리별 get 요청 수정
       if (!response.ok) {
         throw new Error("상품 목록을 가져오는 데 실패했습니다.");
