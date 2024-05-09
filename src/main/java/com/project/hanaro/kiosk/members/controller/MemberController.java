@@ -16,8 +16,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+
+
     @PostMapping("/join")
     public ResponseEntity<MemberJoinResponse> memberJoin(@RequestBody MemberJoinRequest request) {
+
         MemberJoinResponse response = memberService.memberJoin(request);
         return ResponseEntity.ok(response);
     }
@@ -58,6 +61,12 @@ public class MemberController {
     @PatchMapping("/{memberId}")
     public ResponseEntity<MemberUpsertResponse> updateMember(@PathVariable Long memberId, @RequestBody MemberUpsertRequest memberUpsertRequest) {
         MemberUpsertResponse response = memberService.updateMember(memberId, memberUpsertRequest);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/point/{memberId}")
+    public ResponseEntity<MemberPointResponse> getPoint(@PathVariable Long memberId) {
+        MemberPointResponse response = memberService.findPoint(memberId);
         return ResponseEntity.ok(response);
     }
 }
